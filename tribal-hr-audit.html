@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tribal HR Risk Audit — AMERIND Risk Convening 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --navy: #1A2E4A;
+    --navy-light: #243f65;
+    --gold: #C8922A;
+    --gold-light: #FDF3E3;
+    --gold-mid: #F5DFA8;
+    --green: #2E6B3E;
+    --green-bg: #EAF4EE;
+    --amber: #B36B00;
+    --amber-bg: #FEF3DC;
+    --red: #8B2020;
+    --red-bg: #FCEAEA;
+    --gray-100: #F7F7F5;
+    --gray-200: #EDEDEA;
+    --gray-400: #AEACA6;
+    --gray-700: #4A4845;
+    --text: #1C1A18;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F2F0EB;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* WELCOME SCREEN */
+  #welcome {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .welcome-top {
+    background: var(--navy);
+    padding: 3rem 2rem 3.5rem;
+    text-align: center;
+  }
+
+  .welcome-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(200,146,42,0.15);
+    padding: 5px 14px;
+    border-radius: 99px;
+    margin-bottom: 1.25rem;
+  }
+
+  .welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.25;
+    max-width: 560px;
+    margin: 0 auto 1rem;
+  }
+
+  .welcome-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 440px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+
+  .welcome-body {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    max-width: 560px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .how-it-works {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--gray-200);
+  }
+
+  .hiw-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 1rem;
+  }
+
+  .hiw-step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+
+  .hiw-step:last-child { margin-bottom: 0; }
+
+  .hiw-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .hiw-text { font-size: 14px; line-height: 1.55; color: var(--gray-700); }
+  .hiw-text strong { color: var(--text); font-weight: 500; }
+
+  .cat-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .cat-chip {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cat-chip .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .start-btn {
+    display: block;
+    width: 100%;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 0.01em;
+    transition: background 0.15s;
+  }
+
+  .start-btn:hover { background: #B07E22; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  /* AUDIT SCREEN */
+  #audit { display: none; }
+
+  .audit-nav {
+    background: var(--navy);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-back {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+
+  .nav-back:hover { color: #fff; }
+
+  .nav-progress-wrap { flex: 1; margin: 0 1rem; }
+
+  .nav-progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .nav-track {
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .nav-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 99px;
+    transition: width 0.35s ease;
+  }
+
+  .nav-score {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  .section-hero {
+    padding: 2rem 1.25rem 1.5rem;
+    background: var(--navy);
+    text-align: center;
+  }
+
+  .section-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .section-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .questions-wrap {
+    padding: 1rem 1.25rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .q-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 12px;
+    border: 1px solid var(--gray-200);
+    transition: border-color 0.2s;
+  }
+
+  .q-card.answered { border-color: var(--gray-400); }
+
+  .q-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 6px;
+  }
+
+  .q-text {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .radio-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .radio-row input { display: none; }
+
+  .radio-row label {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 6px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--gray-200);
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--gray-700);
+    background: var(--gray-100);
+  }
+
+  .radio-row label:hover { border-color: var(--gray-400); background: #fff; }
+
+  .radio-row input[value="yes"]:checked + label {
+    background: var(--green-bg);
+    color: var(--green);
+    border-color: #7EC89A;
+  }
+
+  .radio-row input[value="partial"]:checked + label {
+    background: var(--amber-bg);
+    color: var(--amber);
+    border-color: #E8B96A;
+  }
+
+  .radio-row input[value="no"]:checked + label {
+    background: var(--red-bg);
+    color: var(--red);
+    border-color: #D9898A;
+  }
+
+
+  .q-insight {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--navy);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.88);
+    display: none;
+  }
+
+  .q-insight.show { display: block; }
+
+  .section-nav-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 1rem 1.25rem 2rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .sec-btn {
+    padding: 14px;
+    border-radius: var(--radius);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .sec-btn.prev { background: #fff; color: var(--navy); border: 1.5px solid var(--gray-200); }
+  .sec-btn.prev:hover { border-color: var(--navy); }
+  .sec-btn.next { background: var(--navy); color: #fff; }
+  .sec-btn.next:hover { background: var(--navy-light); }
+  .sec-btn.next.gold { background: var(--gold); }
+  .sec-btn.next.gold:hover { background: #B07E22; }
+  .sec-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* RESULTS SCREEN */
+  #results { display: none; }
+
+  .results-hero {
+    background: var(--navy);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+
+  .results-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .results-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .results-verdict {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 18px;
+    border-radius: 99px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .results-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .results-body {
+    padding: 1.5rem 1.25rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .cat-result-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+    border: 1px solid var(--gray-200);
+  }
+
+  .cat-result-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .cat-result-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .cat-result-pct { font-size: 14px; font-weight: 600; }
+
+  .mini-track {
+    height: 5px;
+    background: var(--gray-200);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .mini-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+
+  .action-section {
+    margin-top: 1.5rem;
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+  }
+
+  .action-hdr {
+    padding: 1rem 1.25rem;
+    background: var(--navy);
+  }
+
+  .action-hdr-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .action-hdr-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  .action-item {
+    display: flex;
+    gap: 12px;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--gray-200);
+    align-items: flex-start;
+  }
+
+  .action-item:last-child { border-bottom: none; }
+
+  .action-badge {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .badge-no { background: var(--red-bg); color: var(--red); }
+  .badge-partial { background: var(--amber-bg); color: var(--amber); }
+
+  .action-body { flex: 1; }
+  .action-flag { font-size: 13px; line-height: 1.5; color: var(--text); margin-bottom: 3px; }
+  .action-meta { font-size: 11px; color: var(--gray-400); }
+
+  .commit-section {
+    margin-top: 1.5rem;
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+  }
+
+  .commit-hdr {
+    padding: 1rem 1.25rem;
+    background: var(--gold-light);
+    border-bottom: 1px solid var(--gold-mid);
+  }
+
+  .commit-hdr-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .commit-hdr-sub { font-size: 12px; color: var(--amber); }
+
+  .commit-body { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 12px; }
+
+  .commit-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-400);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .commit-field input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--gray-200);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--gray-100);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .commit-field input:focus { border-color: var(--navy); background: #fff; }
+
+  .restart-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 14px;
+    background: var(--gray-100);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .restart-btn:hover { background: #fff; border-color: var(--gray-400); }
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div id="welcome">
+  <div class="welcome-top">
+    <div class="welcome-badge">AMERIND Risk Convening 2026 &nbsp;·&nbsp; Puerto Rico</div>
+    <h1 class="welcome-title">The Hidden Claims File</h1>
+    <p class="welcome-sub">A 23-question audit that reveals how your HR and housing management decisions look from the carrier's side of the table.</p>
+  </div>
+  <div class="welcome-body">
+    <div class="how-it-works">
+      <div class="hiw-title">How it works</div>
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div class="hiw-text"><strong>Five sections, 23 questions.</strong> Work through each category at your own pace as we move through the presentation.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div class="hiw-text"><strong>Answer honestly.</strong> Yes, Partial, or No. Where you mark No or Partial, the carrier's reasoning appears immediately.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div class="hiw-text"><strong>Your results are private.</strong> Only you see your score. At the end, you'll build a 30-day action commitment.</div>
+      </div>
+    </div>
+
+    <div class="cat-preview">
+      <div class="cat-chip"><div class="dot" style="background:#378ADD;"></div>Hiring &amp; onboarding</div>
+      <div class="cat-chip"><div class="dot" style="background:#C8922A;"></div>Supervisor practices</div>
+      <div class="cat-chip"><div class="dot" style="background:#2E6B3E;"></div>Policy &amp; documentation</div>
+      <div class="cat-chip"><div class="dot" style="background:#8B2020;"></div>Safety culture</div>
+      <div class="cat-chip" style="grid-column: span 2;"><div class="dot" style="background:#534AB7;"></div>Claims history &amp; response</div>
+    </div>
+
+    <button class="start-btn" onclick="startAudit()">Begin audit</button>
+    <p class="footer-note">Takes approximately 10 minutes &nbsp;·&nbsp; No data is stored or transmitted</p>
+  </div>
+</div>
+
+<!-- AUDIT -->
+<div id="audit">
+  <div class="audit-nav">
+    <button class="nav-back" onclick="goBack()">&#8592; Back</button>
+    <div class="nav-progress-wrap">
+      <div class="nav-progress-label" id="nav-label">Section 1 of 5</div>
+      <div class="nav-track"><div class="nav-fill" id="nav-fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-score" id="nav-score">—</div>
+  </div>
+
+  <div class="section-hero">
+    <div class="section-num" id="sec-num">Section 1 of 5</div>
+    <div class="section-name" id="sec-name"></div>
+    <div class="section-desc" id="sec-desc"></div>
+  </div>
+
+  <div class="questions-wrap" id="questions-wrap"></div>
+
+  <div class="section-nav-row">
+    <button class="sec-btn prev" id="btn-prev" onclick="prevSection()">Previous</button>
+    <button class="sec-btn next" id="btn-next" onclick="nextSection()">Next section</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="results">
+  <div class="results-hero">
+    <div class="results-eyebrow">Your audit results</div>
+    <div class="results-score" id="res-score">—</div>
+    <div class="results-verdict" id="res-verdict"></div>
+    <div class="results-sub" id="res-sub"></div>
+  </div>
+  <div class="results-body">
+    <div id="cat-results"></div>
+    <div class="action-section">
+      <div class="action-hdr">
+        <div class="action-hdr-title">Your priority action list</div>
+        <div class="action-hdr-sub" id="action-sub">Gaps ranked by severity</div>
+      </div>
+      <div id="action-list"></div>
+    </div>
+    <div class="commit-section">
+      <div class="commit-hdr">
+        <div class="commit-hdr-title">30-day commitment</div>
+        <div class="commit-hdr-sub">What will you do first when you get back?</div>
+      </div>
+      <div class="commit-body">
+        <div class="commit-field">
+          <label>My #1 action</label>
+          <input type="text" placeholder="e.g. Schedule supervisor safety training for all department leads by end of month" />
+        </div>
+        <div class="commit-field">
+          <label>Who I need to involve</label>
+          <input type="text" placeholder="e.g. HR Director, Operations Manager, Risk Officer" />
+        </div>
+        <div class="commit-field">
+          <label>How I will measure success</label>
+          <input type="text" placeholder="e.g. 100% of supervisors trained; incident reports reviewed monthly" />
+        </div>
+      </div>
+    </div>
+    <button class="restart-btn" onclick="restart()">Start over</button>
+  </div>
+</div>
+
+<script>
+const CATS = [
+  {
+    name: "Hiring and onboarding",
+    color: "#378ADD",
+    desc: "The decisions made before an employee's first day determine your workers' comp risk profile. Most preventable claims have a hiring or onboarding fingerprint on them.",
+    questions: [
+      { text: "Does your organization conduct pre-employment drug and alcohol screening for all positions involving safety-sensitive duties, equipment operation, or direct community service?", insight: "Impairment-related claims are among the most costly in Tribal operations — and the hardest to defend without a pre-employment baseline. When a post-incident test comes back positive and there's no pre-hire screen on file, your carrier has no way to establish when the problem started. That ambiguity drives up claim cost and settlement exposure significantly." },
+      { text: "Are new hires required to review and sign off on your organization's safety and workplace conduct expectations before their first day of work?", insight: "Signed acknowledgment at hire is one of the most direct ways to limit liability in a disputed claim or separation. Without it, 'I didn't know' becomes a legitimate defense for the employee — and a problem for your organization. From a carrier standpoint, documented acknowledgment of expectations at onboarding is a leading indicator of how seriously an organization manages its workforce risk." },
+      { text: "Does onboarding include a hands-on safety orientation specific to the hazards of the role — not just a general overview?", insight: "New hires file a disproportionate share of early workers' comp claims across every sector we insure. A generic safety overview doesn't protect someone operating equipment or working in physically demanding conditions they've never encountered before. When a new-hire claim is filed and there's no role-specific orientation on record, the organization's ability to defend its duty of care is significantly weakened." },
+      { text: "Are candidates for physically demanding roles assessed for fitness for duty before they begin work?", insight: "Placing someone in a physically demanding role without any pre-placement assessment is one of the most direct paths to an early, expensive claim. Without a baseline, there's no way to establish whether an injury was related to a pre-existing condition or caused by the work itself — a distinction that drives claim cost and reserve levels. A pre-placement assessment protects both the worker and the organization." },
+      { text: "Is there a structured 90-day check-in that proactively identifies early safety concerns, physical strain, or near-misses before they develop into claims?", insight: "The majority of preventable first-year claims show warning signs well before they become formal losses. Organizations without a structured early check-in process miss the window where intervention is cheap and effective. By the time an injury is reported, the cost of treatment, lost time, and claim management far exceeds what early correction would have cost — and your experience modifier reflects that." }
+    ]
+  },
+  {
+    name: "Supervisor practices",
+    color: "#C8922A",
+    desc: "Supervisors are where your policies either hold or fall apart. The most expensive claim in your loss runs has a supervisor's fingerprint somewhere in its history.",
+    questions: [
+      { text: "Are supervisors trained to document workplace incidents, performance concerns, and corrective actions in a clear and consistent way?", insight: "Inconsistent or absent documentation is the single most common reason organizations cannot defend employment decisions or workers' comp claims. When a claim is disputed and the file is thin, carriers and opposing parties both read that as an exposure. The cost of a claim that can't be defended is almost always higher than the cost of one that can." },
+      { text: "Do supervisors know exactly what to do in the first 24 hours after a worker is injured — including who to notify, what to document, and how to preserve the scene?", insight: "Delayed injury reporting and poor first-response documentation are two of the most reliable predictors of elevated claim cost. When the initial response is slow or incomplete, medical direction gets delayed, scene evidence is lost, and the claim narrative gets shaped by whoever speaks first — which is rarely the employer. That 24-hour window is where claim trajectory is set." },
+      { text: "When a worker raises a safety concern or reports a near-miss, is there a clear process for supervisors to respond and follow through?", insight: "Unaddressed near-misses are deferred claims. Every incident in your loss runs was preceded by conditions that were observable before the injury occurred. Organizations that track and respond to near-misses consistently have lower frequency and severity in their claims data — and carriers price that difference at renewal." },
+      { text: "Are supervisors equipped to recognize early signs of fatigue, substance impairment, or physical distress before they lead to an incident?", insight: "Impairment and fatigue-related incidents carry the highest average cost per claim across physical operations. They are also among the most legally complex — particularly when the question of whether the employer could have intervened comes into play. A supervisor who recognized warning signs and failed to act, or who was never trained to recognize them, creates significant liability exposure for the organization." },
+      { text: "Does leadership periodically review how supervisors are documenting incidents and employee issues to catch gaps before they cost the organization?", insight: "Inconsistency across supervisors creates two kinds of exposure: claims that can't be defended because the file is thin, and claims of unequal treatment that arise when similar situations are handled differently. Periodic review by leadership catches these gaps while they're still correctable — before a claim or dispute puts the documentation under a magnifying glass." }
+    ]
+  },
+  {
+    name: "Policy and documentation",
+    color: "#2E6B3E",
+    desc: "Your documentation is your organization's memory. When something goes wrong, what you have on paper is what you can stand behind.",
+    questions: [
+      { text: "Does your organization have written employment and safety policies that reflect how your operations actually run — not just boilerplate language?", insight: "Policies that don't match practice are a liability rather than a protection. When a claim or dispute goes to review, the gap between what your policy says and what your supervisors actually do becomes the story. Organizations with policies built around their actual operations are consistently better positioned to defend decisions — and to demonstrate to their carrier that risk is being actively managed." },
+      { text: "Do you have a written emergency response plan for your facilities and work sites, and do employees know what to do when something goes wrong?", insight: "Emergency incidents without a response plan on file generate higher liability exposure, longer incident durations, and more costly outcomes — across property, liability, and workers' comp lines. The absence of a plan also signals to your carrier that operational risk management is informal, which affects how your account is underwritten and priced." },
+      { text: "Is there an internal process that gives employees a fair way to raise concerns and have them addressed — before situations escalate or erode trust?", insight: "Unresolved internal concerns don't disappear — they escalate or fester. When employees have no internal path to resolution, small issues become disputed claims, formal complaints, or workforce instability. Organizations with functioning internal processes have fewer claim disputes, faster resolutions when claims do occur, and lower overall liability exposure from employment-related issues." },
+      { text: "Are employee records maintained completely and consistently across all departments, so the organization can stand behind any employment decision it makes?", insight: "Incomplete or inconsistent personnel files are the most common reason organizations lose defensible positions in disputed claims and separations. If the record doesn't exist, the decision it was based on can't be defended. From a claims standpoint, an organization that can produce complete, consistent records across departments signals disciplined risk management — and that matters at renewal." }
+    ]
+  },
+  {
+    name: "Safety culture and training",
+    color: "#8B2020",
+    desc: "Culture is what happens when no one is watching. Organizations that invest in safety before an incident occurs pay far less than those that respond after.",
+    questions: [
+      { text: "Do workers in hands-on, high-exposure roles receive training specific to their job hazards — and is that training refreshed on a regular basis?", insight: "Role-specific training is one of the strongest defenses against a negligence finding in a serious workers' comp claim. 'We provided general safety training' is a much weaker position than 'here is the documented, role-specific training this employee received before working with this equipment.' Annual refreshers matter too — skills degrade, conditions change, and an outdated training record provides limited protection." },
+      { text: "Do workers feel safe raising safety concerns without fear of being dismissed, ignored, or penalized?", insight: "When workers stop reporting, the organization loses its earliest and least expensive opportunity to prevent the next claim. Fear of dismissal or retaliation is one of the most reliable predictors of elevated incident frequency — hazards go unreported until they produce an injury. From a carrier perspective, a workforce culture where people speak up is a direct indicator of lower long-term loss exposure." },
+      { text: "Does your organization track close calls and near-misses, and actually use that information to prevent the next incident?", insight: "Near-misses are the clearest advance warning system available for predicting where your next claim will come from. Organizations that track and act on them consistently show lower frequency and severity in their loss data. Those that don't are, in effect, waiting for the more expensive version of the same event. Your carrier can see this pattern in your loss runs — and it's priced accordingly." },
+      { text: "Is safety treated as a core job responsibility for supervisors and managers — not just something owned by a safety officer?", insight: "When safety is one person's job, the gap between that person and every operational decision made without them is where claims originate. Organizations where supervisors own safety outcomes — not just awareness — have demonstrably better loss experience. This is one of the most consistent patterns across the AMERIND portfolio: leadership accountability for safety correlates directly with claims performance." },
+      { text: "Has someone walked your facilities or work sites in the last three years specifically looking for physical hazards and operational risk?", insight: "Uninspected facilities carry a direct premium impact because unidentified hazards become unpriced risk. A formal inspection — whether conducted internally or by your carrier's risk control team — creates a documented baseline that protects you in the event of a claim and signals to your underwriter that risk is being actively managed. The absence of any inspection history is one of the most common red flags in account review." }
+    ]
+  },
+  {
+    name: "Claims history and response",
+    color: "#534AB7",
+    desc: "Claims data is one of the most underused tools in Tribal risk management. What your loss runs are telling you is more valuable than any inspection report.",
+    questions: [
+      { text: "Does your organization regularly review workers' comp claim history to identify patterns by department, role, or type of injury?", insight: "Your loss runs contain the clearest available picture of where your organization's risk actually lives. Repeated claims from the same department, supervisor, or type of work are a pattern — and a pricing signal. Carriers see it. Organizations that review their own claims data quarterly and act on what they find are the ones that show up differently at renewal. Those that don't review it are essentially letting the carrier tell the story." },
+      { text: "When a worker is injured, is there a structured process to bring them back to meaningful work as soon as safely possible?", insight: "Claim duration is one of the most significant drivers of total workers' comp cost. Every additional day away from work increases medical cost, indemnity exposure, and the likelihood of claim escalation. A structured return-to-work program is the single most effective tool for controlling claim duration — and carriers weight its presence heavily when evaluating account performance and pricing renewals." },
+      { text: "When an employee separation is disputed, does your organization have clear, consistent documentation to support the decision that was made?", insight: "Disputed separations without strong documentation are among the most expensive employment liability exposures an organization can carry. When the record is thin or inconsistent, the cost of defense — regardless of outcome — is substantial, and settlement pressure increases. Organizations that build documentation discipline before disputes arise are consistently better positioned to resolve them quickly and at lower cost." },
+      { text: "Does your team have a direct working relationship with your insurance carrier's risk control resources — and are you actively using them?", insight: "Your carrier's risk control team exists to help you reduce the losses that drive your premium. Organizations that use that resource proactively — site visits, training support, loss run review, policy guidance — consistently outperform those that only interact with their carrier at renewal or after a claim. If that relationship isn't active, you're paying for a resource you're not using, and the losses you're not preventing are showing up in your experience modifier." }
+    ]
+  }
+];
+
+
+
+let currentSection = 0;
+const answers = {};
+
+function startAudit() {
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('audit').style.display = 'block';
+  renderSection(0);
+}
+
+function renderSection(idx) {
+  currentSection = idx;
+  const cat = CATS[idx];
+
+  document.getElementById('sec-num').textContent = 'Section ' + (idx + 1) + ' of ' + CATS.length;
+  document.getElementById('sec-name').textContent = cat.name;
+  document.getElementById('sec-desc').textContent = cat.desc;
+  document.getElementById('nav-label').textContent = 'Section ' + (idx + 1) + ' of ' + CATS.length;
+  document.getElementById('nav-fill').style.width = ((idx / CATS.length) * 100) + '%';
+
+  const wrap = document.getElementById('questions-wrap');
+  wrap.innerHTML = '';
+
+  cat.questions.forEach((q, qi) => {
+    const key = idx + '-' + qi;
+    const saved = answers[key];
+    const card = document.createElement('div');
+    card.className = 'q-card' + (saved ? ' answered' : '');
+    card.id = 'card-' + key;
+
+    card.innerHTML = `
+      <div class="q-num">Question ${qi + 1}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="radio-row">
+        <div><input type="radio" name="${key}" id="${key}-y" value="yes" ${saved==='yes'?'checked':''}><label for="${key}-y">Yes</label></div>
+        <div><input type="radio" name="${key}" id="${key}-p" value="partial" ${saved==='partial'?'checked':''}><label for="${key}-p">Partial</label></div>
+        <div><input type="radio" name="${key}" id="${key}-n" value="no" ${saved==='no'?'checked':''}><label for="${key}-n">No</label></div>
+      </div>
+      <div class="q-insight" id="insight-${key}">${q.insight}</div>
+    `;
+
+    ['yes','partial','no'].forEach(val => {
+      const inp = card.querySelector('[id="' + key + '-' + val[0] + '"');
+      inp.addEventListener('change', () => {
+        answers[key] = val;
+        card.classList.add('answered');
+        const insight = document.getElementById('insight-' + key);
+        if (insight) insight.className = 'q-insight' + (val !== 'yes' ? ' show' : '');
+
+        updateNavScore();
+      });
+    });
+
+    wrap.appendChild(card);
+  });
+
+  const prev = document.getElementById('btn-prev');
+  const next = document.getElementById('btn-next');
+  prev.disabled = idx === 0;
+  next.textContent = idx === CATS.length - 1 ? 'See my results' : 'Next section';
+  next.className = 'sec-btn next' + (idx === CATS.length - 1 ? ' gold' : '');
+
+  updateNavScore();
+  window.scrollTo(0, 0);
+}
+
+function updateNavScore() {
+  const total = Object.keys(answers).length;
+  const maxTotal = CATS.reduce((a, c) => a + c.questions.length, 0);
+  if (total === 0) { document.getElementById('nav-score').textContent = '—'; return; }
+  const score = Object.values(answers).reduce((a, v) => a + (v==='yes'?2:v==='partial'?1:0), 0);
+  const pct = Math.round((score / (total * 2)) * 100);
+  document.getElementById('nav-score').textContent = pct + '%';
+}
+
+function nextSection() {
+  if (currentSection === CATS.length - 1) { showResults(); return; }
+  renderSection(currentSection + 1);
+}
+
+function prevSection() {
+  if (currentSection > 0) renderSection(currentSection - 1);
+}
+
+function goBack() {
+  if (currentSection === 0) {
+    document.getElementById('audit').style.display = 'none';
+    document.getElementById('welcome').style.display = 'flex';
+  } else {
+    renderSection(currentSection - 1);
+  }
+}
+
+function showResults() {
+  document.getElementById('audit').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  const totalQ = CATS.reduce((a, c) => a + c.questions.length, 0);
+  const answered = Object.keys(answers).length;
+  const score = Object.values(answers).reduce((a, v) => a + (v==='yes'?2:v==='partial'?1:0), 0);
+  const maxScore = answered * 2;
+  const pct = answered > 0 ? Math.round((score / maxScore) * 100) : 0;
+
+  document.getElementById('res-score').textContent = pct + '%';
+  document.getElementById('res-sub').textContent = answered + ' of ' + totalQ + ' questions answered';
+
+  let verdict, vStyle;
+  if (pct >= 75) { verdict = 'Low exposure'; vStyle = 'background:#EAF4EE;color:#2E6B3E;'; }
+  else if (pct >= 50) { verdict = 'Moderate exposure'; vStyle = 'background:#FEF3DC;color:#B36B00;'; }
+  else if (pct >= 30) { verdict = 'High exposure'; vStyle = 'background:#FCEAEA;color:#8B2020;'; }
+  else { verdict = 'Critical exposure'; vStyle = 'background:#FCEAEA;color:#8B2020;font-weight:600;'; }
+
+  const vEl = document.getElementById('res-verdict');
+  vEl.textContent = verdict;
+  vEl.style.cssText = vStyle;
+
+  const catDiv = document.getElementById('cat-results');
+  catDiv.innerHTML = '';
+  CATS.forEach((cat, ci) => {
+    const catAnswered = cat.questions.map((_, qi) => answers[ci + '-' + qi]).filter(Boolean);
+    if (catAnswered.length === 0) return;
+    const catScore = catAnswered.reduce((a, v) => a + (v==='yes'?2:v==='partial'?1:0), 0);
+    const catPct = Math.round((catScore / (catAnswered.length * 2)) * 100);
+    let fillColor = catPct >= 70 ? '#2E6B3E' : catPct >= 40 ? '#B36B00' : '#8B2020';
+    catDiv.innerHTML += `
+      <div class="cat-result-card">
+        <div class="cat-result-top">
+          <div class="cat-result-name">${cat.name}</div>
+          <div class="cat-result-pct" style="color:${fillColor}">${catPct}%</div>
+        </div>
+        <div class="mini-track"><div class="mini-fill" style="width:${catPct}%;background:${fillColor};"></div></div>
+      </div>
+    `;
+  });
+
+  const gaps = [];
+  CATS.forEach((cat, ci) => {
+    cat.questions.forEach((q, qi) => {
+      const val = answers[ci + '-' + qi];
+      if (val === 'no') gaps.push({ insight: q.insight, cat: cat.name, severity: 'no' });
+      else if (val === 'partial') gaps.push({ insight: q.insight, cat: cat.name, severity: 'partial' });
+    });
+  });
+
+  const prioritized = [...gaps.filter(g => g.severity==='no'), ...gaps.filter(g => g.severity==='partial')].slice(0, 5);
+  const actionList = document.getElementById('action-list');
+  document.getElementById('action-sub').textContent = prioritized.length + ' gap' + (prioritized.length !== 1 ? 's' : '') + ' identified, ranked by severity';
+
+  if (prioritized.length === 0) {
+    actionList.innerHTML = '<div style="padding:1.25rem;font-size:14px;color:#AEACA6;text-align:center;">No gaps identified. Strong profile.</div>';
+  } else {
+    actionList.innerHTML = prioritized.map((g, i) => `
+      <div class="action-item">
+        <div class="action-badge ${g.severity==='no'?'badge-no':'badge-partial'}">${i+1}</div>
+        <div class="action-body">
+          <div class="action-flag">${g.insight}</div>
+          <div class="action-meta">${g.cat} &nbsp;·&nbsp; ${g.severity==='no'?'Not in place':'Partially in place'}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function restart() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('welcome').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
